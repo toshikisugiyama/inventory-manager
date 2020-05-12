@@ -11,5 +11,30 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.webpackConfig({
+	module: {
+		rules: [
+			{
+				test: /\.pug$/,
+				oneOf: [
+					{
+						resourceQuery: /^\?vue/,
+						use: ['pug-plain-loader']
+					},
+					{
+						use: ['raw-loader', 'pug-plain-loader']
+					}
+				]
+			}
+		]
+	}
+})
+
+mix
+	.browserSync({
+		proxy: '0.0.0.0:80',
+		open: false
+	})
+	.ts('resources/ts/app.ts', 'public/js')
+	.sass('resources/sass/app.scss', 'public/css')
+	.version();
