@@ -6,19 +6,19 @@ import Login from './pages/Login.vue'
 Vue.use(VueRouter)
 
 const routes: any = [
-	{
-		path: '/',
-		component: Inventory
-	},
-	{
-		path: '/login',
-		component: Login
-	}
+  {
+    path: '/',
+    component: Inventory
+  },
+  {
+    path: '/login',
+    component: Login
+  }
 ]
 
 const router = new VueRouter({
-	mode: 'history',
-	routes
+  mode: 'history',
+  routes
 })
 
 export default router
