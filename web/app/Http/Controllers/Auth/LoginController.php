@@ -46,4 +46,12 @@ class LoginController extends Controller
     {
         return $user;
     }
+
+    /**
+     * override loggedOut method.
+     */
+    protected function loggedOut(Request $request)
+    {
+        return response()->json();
+    }
 }
