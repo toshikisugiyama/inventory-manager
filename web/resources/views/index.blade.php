@@ -6,6 +6,7 @@
         <title>inventory manager</title>
 				<script src="{{ mix('js/app.js') }}" defer></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+        <link rel="stylesheet" href="css/app.css">
     </head>
     <body>
 			<div id="app"></div>

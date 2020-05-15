@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require('laravel-mix')
 
 /*
  |--------------------------------------------------------------------------
@@ -11,30 +11,31 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.webpackConfig({
+mix
+.webpackConfig({
   module: {
-    rules: [
-      {
-        test: /\.pug$/,
-        oneOf: [
-          {
-            resourceQuery: /^\?vue/,
-            use: ['pug-plain-loader']
-          },
-          {
-            use: ['raw-loader', 'pug-plain-loader']
-          }
-        ]
-      }
-    ]
+    rules: [{
+      test: /\.pug$/,
+      oneOf: [
+        {
+          resourceQuery: /^\?vue/,
+          use: ['pug-plain-loader']
+        },
+        {
+          use: ['raw-loader', 'pug-plain-loader']
+        }
+      ]
+    }]
   }
 })
-
-mix
-  .browserSync({
-    proxy: '0.0.0.0:80',
-    open: false
-  })
-  .ts('resources/ts/app.ts', 'public/js')
-  .sass('resources/sass/app.scss', 'public/css')
-  .version();
+.browserSync({
+  proxy: '0.0.0.0:80',
+  open: false,
+  files: [
+    'resources/**/*',
+    'public/**/*'
+  ]
+})
+.ts('resources/ts/app.ts', 'public/js/app.js')
+.sass('resources/sass/app.scss', 'public/css')
+.version()
