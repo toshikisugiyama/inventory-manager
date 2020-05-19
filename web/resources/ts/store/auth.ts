@@ -5,9 +5,12 @@ const state: AuthState = {
   user: null
 }
 
-const getters = {}
+const getters = {
+  check: (state: AuthState) => !! state.user,
+  username: (state: AuthState) => state.user ? state.user.name : ''
+}
 const mutations = {
-  setUser (state: any, user: User) {
+  setUser (state: AuthState, user: User) {
     state.user = user
   }
 }
