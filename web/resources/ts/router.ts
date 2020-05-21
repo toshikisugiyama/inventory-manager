@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Inventory from './pages/Inventory.vue'
 import Login from './pages/Login.vue'
+import SystemError from './pages/errors/System.vue'
 import store from './store'
 
 Vue.use(VueRouter)
@@ -21,6 +22,10 @@ const routes: any = [
         next()
       }
     }
+  },
+  {
+    path: '/500',
+    component: SystemError
   }
 ]
 
