@@ -28,8 +28,7 @@ class LogoutApiTest extends TestCase
      */
     public function test()
     {
-        $response = $this->actingAs($this->user)
-                        ->json('POST', route('logout'));
+        $response = $this->actingAs($this->user)->postJson(route('logout'));
         $response->assertStatus(200);
         $this->assertGuest();
     }
