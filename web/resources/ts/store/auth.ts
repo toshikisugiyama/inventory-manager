@@ -1,10 +1,11 @@
 import axios from 'axios'
-import {AuthState, User} from './types'
-import {OK} from '../util'
+import {AuthState, User, LoginError} from './types'
+import {OK, UNPROCESSABLE_ENTITY} from '../util'
 
 const state: AuthState = {
   user: null,
-  apiStatus: null
+  apiStatus: null,
+  loginError: null
 }
 
 const getters = {
@@ -17,6 +18,9 @@ const mutations = {
   },
   setApiStatus (state: AuthState, apiStatus: boolean) {
     state.apiStatus = apiStatus
+  },
+  setLoginErrorMessages (state: AuthState, messages: LoginError) {
+    state.loginError = messages
   }
 }
 const actions = {
@@ -26,6 +30,7 @@ const actions = {
   },
   async login (context: any, data: User) {
     context.commit('setUser', null)
+    context.commit('setLoginErrorMessages', null)
     const response = await axios.post('/api/v1/login', data)
       .catch(error => error.response || error)
     if (response.status === OK) {
@@ -34,7 +39,11 @@ const actions = {
       return false
     }
     context.commit('setApiStatus', false)
-    context.commit('error/setCode', response.status, { root: true })
+    if (response.status === UNPROCESSABLE_ENTITY) {
+      context.commit('setLoginErrorMessages', response.data.errors)
+    } else {
+      context.commit('error/setCode', response.status, { root: true })
+    }
   },
   async logout (context: any) {
     const response = await axios.post('/api/v1/logout')

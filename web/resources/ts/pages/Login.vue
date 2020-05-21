@@ -7,10 +7,14 @@ section.login(v-if="tab === 0")
       label
         span Eメールアドレス
         input#login-email(type="text" v-model="loginForm.email")
+        ul(v-if="loginErrors && loginErrors.email")
+          li(v-for="msg in loginErrors.email" :key="msg") {{ msg }}
     div.login__form__item.form__item.password
       label
         span パスワード
         input#login-password(type="text" v-model="loginForm.password")
+        ul(v-if="loginErrors && loginErrors.password")
+          li(v-for="msg in loginErrors.password" :key="msg") {{ msg }}
     div.login__form__item.form__item.button
       button(type="submit") ログイン
   ul.login__tab.tab
@@ -45,6 +49,7 @@ section.register(v-else)
 
 <script lang="ts">
 import Vue from 'vue'
+import { LoginError } from '../store/types'
 export default Vue.extend({
   data () {
     return {
@@ -64,6 +69,10 @@ export default Vue.extend({
   computed: {
     apiStatus () {
       return this.$store.state.auth.apiStatus
+    },
+    loginErrors () {
+      const loginError: LoginError = this.$store.state.auth.loginError
+      return loginError
     }
   },
   methods: {
@@ -76,7 +85,13 @@ export default Vue.extend({
     async register () {
       await this.$store.dispatch('auth/register', this.registerForm)
       this.$router.push('/')
+    },
+    clearError () {
+      this.$store.commit('auth/setLoginErrorMessages', null)
     }
+  },
+  created () {
+    this.clearError()
   }
 })
 </script>
@@ -104,6 +119,14 @@ export default Vue.extend({
     flex-direction: column;
     span {
       margin: 0 0 5px 0;
+    }
+    & > ul {
+      list-style: inside;
+      padding: 10px 10px 0;
+      background-color: rgb(241, 158, 221);
+      & > li {
+        margin-bottom: 10px;
+      }
     }
   }
   &__item.button {
