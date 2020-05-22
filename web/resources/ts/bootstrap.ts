@@ -1,5 +1,5 @@
 import { getCookieValue } from './util'
-import Axios, { AxiosStatic } from 'axios'
+import { AxiosStatic } from 'axios'
 declare global {
   interface Window {
     axios: AxiosStatic
@@ -18,7 +18,10 @@ declare global {
 window.axios = require('axios')
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-
+window.axios.interceptors.response.use(
+  response => response,
+  error => error.response || error
+)
 window.axios.interceptors.request.use((config: any) => {
   config.headers['X-XSRF-TOKEN'] = getCookieValue('XSRF-TOKEN')
   return config

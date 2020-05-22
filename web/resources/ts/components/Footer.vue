@@ -15,7 +15,9 @@ export default Vue.extend({
   methods: {
     async logout () {
       await this.$store.dispatch('auth/logout')
-      this.$router.push('/login')
+      if (this.$store.state.auth.apiStatus === true) {
+        this.$router.push('/login')
+      }
     }
   }
 })

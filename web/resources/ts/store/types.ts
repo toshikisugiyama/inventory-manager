@@ -1,7 +1,8 @@
 export interface AuthState {
   user: User | null,
   apiStatus: boolean | null,
-  loginError: LoginError | null
+  loginErrorMessages: LoginError | null,
+  registerErrorMessages: RegisterError | null
 }
 
 export interface User {
@@ -15,6 +16,12 @@ export interface ErrorState {
 }
 
 export interface LoginError {
+  email?: Array<string>,
+  password?: Array<string>
+}
+
+export interface RegisterError {
+  name?: Array<string>,
   email?: Array<string>,
   password?: Array<string>
 }
