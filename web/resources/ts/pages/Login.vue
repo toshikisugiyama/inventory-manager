@@ -7,10 +7,14 @@ section.login(v-if="tab === 0")
       label
         span Eメールアドレス
         input#login-email(type="text" v-model="loginForm.email")
+        ul(v-if="loginErrors && loginErrors.email")
+          li(v-for="msg in loginErrors.email" :key="msg") {{ msg }}
     div.login__form__item.form__item.password
       label
         span パスワード
         input#login-password(type="text" v-model="loginForm.password")
+        ul(v-if="loginErrors && loginErrors.password")
+          li(v-for="msg in loginErrors.password" :key="msg") {{ msg }}
     div.login__form__item.form__item.button
       button(type="submit") ログイン
   ul.login__tab.tab
@@ -24,14 +28,20 @@ section.register(v-else)
       label
         span 名前
         input#register-name(type="text" v-model="registerForm.name")
+        ul(v-if="registerErrors && registerErrors.name")
+          li(v-for="msg in registerErrors.name" :key="msg") {{ msg }}
     div.register__form__item.form__item.email
       label
         span Eメールアドレス
         input#register-email(type="text" v-model="registerForm.email")
+        ul(v-if="registerErrors && registerErrors.email")
+          li(v-for="msg in registerErrors.email" :key="msg") {{ msg }}
     div.register__form__item.form__item.password
       label
         span パスワード
         input#register-password(type="text" v-model="registerForm.password")
+        ul(v-if="registerErrors && registerErrors.password")
+          li(v-for="msg in registerErrors.password" :key="msg") {{ msg }}
     div.register__form__item.form__item.password_confirmation
       label
         span パスワード（確認）
@@ -39,12 +49,13 @@ section.register(v-else)
     div.register__form__item.form__item.button
       button(type="submit") サインアップ
   ul.register__tab.tab
-    li.register__tab__item.tab__item(:class="{'active' : tab===0}" @click="tab=0") ログイン
-    li.register__tab__item.tab__item(:class="{'active' : tab===1}" @click="tab=1") サインアップ
+    li.register__tab__item.tab__item(:class="{'active' : tab===0}" @click="tab=0; clearError()") ログイン
+    li.register__tab__item.tab__item(:class="{'active' : tab===1}" @click="tab=1; clearError()") サインアップ
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { LoginError, RegisterError } from '../store/types'
 export default Vue.extend({
   data () {
     return {
@@ -64,6 +75,14 @@ export default Vue.extend({
   computed: {
     apiStatus () {
       return this.$store.state.auth.apiStatus
+    },
+    loginErrors () {
+      const loginErrorMessages: LoginError = this.$store.state.auth.loginErrorMessages
+      return loginErrorMessages
+    },
+    registerErrors () {
+      const registerErrorMessages: RegisterError = this.$store.state.auth.registerErrorMessages
+      return registerErrorMessages
     }
   },
   methods: {
@@ -75,8 +94,17 @@ export default Vue.extend({
     },
     async register () {
       await this.$store.dispatch('auth/register', this.registerForm)
-      this.$router.push('/')
+      if (this.apiStatus === true) {
+        this.$router.push('/')
+      }
+    },
+    clearError () {
+      this.$store.commit('auth/setLoginErrorMessages', null)
+      this.$store.commit('auth/setRegisterErrorMessages', null)
     }
+  },
+  created () {
+    this.clearError()
   }
 })
 </script>
@@ -104,6 +132,14 @@ export default Vue.extend({
     flex-direction: column;
     span {
       margin: 0 0 5px 0;
+    }
+    & > ul {
+      list-style: inside;
+      padding: 10px 10px 0;
+      background-color: rgb(241, 158, 221);
+      & > li {
+        margin-bottom: 10px;
+      }
     }
   }
   &__item.button {

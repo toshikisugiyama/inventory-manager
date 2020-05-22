@@ -1,10 +1,12 @@
 import axios from 'axios'
-import {AuthState, User} from './types'
-import {OK} from '../util'
+import {AuthState, User, LoginError, RegisterError} from './types'
+import {OK, UNPROCESSABLE_ENTITY, CREATED} from '../util'
 
 const state: AuthState = {
   user: null,
-  apiStatus: null
+  apiStatus: null,
+  loginErrorMessages: null,
+  registerErrorMessages: null
 }
 
 const getters = {
@@ -17,28 +19,54 @@ const mutations = {
   },
   setApiStatus (state: AuthState, apiStatus: boolean) {
     state.apiStatus = apiStatus
+  },
+  setLoginErrorMessages (state: AuthState, messages: LoginError) {
+    state.loginErrorMessages = messages
+  },
+  setRegisterErrorMessages (state: AuthState, messages: RegisterError) {
+    state.registerErrorMessages = messages
   }
 }
 const actions = {
   async register (context: any, data: User) {
     const response = await axios.post('/api/v1/register', data)
-    context.commit('setUser', response.data)
+    if (response.status === CREATED) {
+      context.commit('setApiStatus', true)
+      context.commit('setUser', response.data)
+      return false
+    }
+    context.commit('setApiStatus', false)
+    if (response.status === UNPROCESSABLE_ENTITY) {
+      context.commit('setRegisterErrorMessages', response.data.errors)
+    } else {
+      context.commit('error/setCode', response.status, {roor: true})
+    }
   },
   async login (context: any, data: User) {
     context.commit('setUser', null)
+    context.commit('setLoginErrorMessages', null)
     const response = await axios.post('/api/v1/login', data)
-      .catch(error => error.response || error)
+
     if (response.status === OK) {
       context.commit('setApiStatus', true)
       context.commit('setUser', response.data)
       return false
     }
     context.commit('setApiStatus', false)
-    context.commit('error/setCode', response.status, { root: true })
+    if (response.status === UNPROCESSABLE_ENTITY) {
+      context.commit('setLoginErrorMessages', response.data.errors)
+    } else {
+      context.commit('error/setCode', response.status, { root: true })
+    }
   },
   async logout (context: any) {
+    context.commit('setApiStatus', null)
     const response = await axios.post('/api/v1/logout')
-    context.commit('setUser', null)
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      context.commit('setUser', null)
+      return false
+    }
   },
   async currentUser (context: any) {
     const response = await axios.get('/api/v1/user')
