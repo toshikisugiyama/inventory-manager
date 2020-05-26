@@ -12,6 +12,6 @@ class MaterialsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Materials::class, 3)->create();
+        factory(App\Materials::class, 10)->create();
     }
 }
