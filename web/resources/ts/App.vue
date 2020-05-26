@@ -4,22 +4,32 @@ div
   main
     RouterView
   Footer
+  PageLoading(v-show="loadingState")
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import PageLoading from './components/PageLoading.vue'
 import {INTERNAL_SERVER_ERROR} from './util'
 export default Vue.extend({
   components: {
     Header,
-    Footer
+    Footer,
+    PageLoading
   },
   computed: {
     errorCode () {
       return this.$store.state.error.code
+    },
+    loadingState () {
+      return this.$store.state.loading.loadingState
     }
+  },
+  async created () {
+    await this.$store.dispatch('materials/fetchMaterialItems')
+    this.$store.commit('loading/setLoadingState', false)
   },
   watch: {
     errorCode: {
@@ -30,8 +40,11 @@ export default Vue.extend({
       },
       immediate: true
     },
-    $route () {
-      this.$store.commit('error/setCode', null)
+    $route: {
+      handler () {
+        this.$store.commit('error/setCode', null)
+      },
+      immediate: true
     }
   }
 })
