@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {ErrorState} from './types'
 
 const state: ErrorState = {

@@ -25,11 +25,10 @@ class MaterialApiTest extends TestCase
     /**
      * check material index.
      */
-    public function testMaterialIndex()
+    public function testMaterialIndexReturnMaterialsData()
     {
         factory(Materials::class, 5)->create();
         $response = $this->getJson(route('materials.index'));
-        $materials = Materials::get();
         $response
             ->assertOk()
             ->assertJsonCount(5, 'data')
