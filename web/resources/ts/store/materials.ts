@@ -28,6 +28,14 @@ const actions = {
       return false
     }
     commit('setMaterialItems', response.data.data)
+  },
+  async updateMaterialItem ({commit, dispatch}: {commit: Function, dispatch: Function}, {materialId, payload}: {materialId: string, payload: MaterialItem}) {
+    const response = await axios.put(url + '/' + materialId, payload)
+    if (response.status !== OK) {
+      commit('error/setCode', response.status, {root: true})
+      return false
+    }
+    dispatch('fetchMaterialItems')
   }
 }
 

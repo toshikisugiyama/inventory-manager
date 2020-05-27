@@ -14,6 +14,7 @@ Vue.use(VueRouter)
 const routes: any = [
   {
     path: '/',
+    name: 'materialItems',
     component: Materials
   },
   {

@@ -12,8 +12,8 @@
       h3.material-edit-confirm__container__unit__title__unit 単位
       .material-edit-confirm__container__unit__content {{ unit }}
     section.material-edit-confirm__container__buttons
-      button.material-edit-confirm__container__buttons__back(@click="goBackPage") 戻る
-      router-link.material-edit-confirm__container__buttons__okay(:to="{name: 'confirmEditMaterialItem', params: {materialId: materialId}}" tag='button') 決定
+      button.material-edit-confirm__container__buttons__back(@click="goBackPage") キャンセル
+      button.material-edit-confirm__container__buttons__okay(@click="editMaterial") 決定
 </template>
 
 <script lang="ts">
@@ -54,8 +54,13 @@ export default Vue.extend({
     }
   },
   methods: {
-    async goBackPage () {
+    goBackPage () {
       this.$router.go(-1)
+    },
+    async editMaterial () {
+      this.$router.push({name: 'materialItem', params: {materialId: this.materialId}})
+      await this.$store.dispatch('materials/updateMaterialItem', {materialId: this.materialId, payload: this.material})
+      await this.$store.dispatch('materials/fetchMaterialItems')
     }
   }
 })

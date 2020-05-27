@@ -24,7 +24,7 @@ export default Vue.extend({
   },
   methods: {
     goBackPage () {
-      this.$router.go(-1)
+      this.$router.push({name: 'materialItems'})
       this.$store.commit('materials/setMaterialItem', null)
     }
   },
