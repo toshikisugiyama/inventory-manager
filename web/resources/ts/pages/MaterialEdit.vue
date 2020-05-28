@@ -55,8 +55,8 @@ export default Vue.extend({
   methods: {
     async goBackPage () {
       await this.$store.commit('loading/setLoadingState', true)
-      this.$router.go(-1)
       await this.$store.dispatch('materials/fetchMaterialItems')
+      this.$router.go(-1)
       this.$store.commit('loading/setLoadingState', false)
     }
   }

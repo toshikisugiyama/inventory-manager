@@ -5,7 +5,11 @@ import { OK } from "../util"
 const url: string = '/api/v1/materials'
 const state: Materials = {
   materialItems: [],
-  materialItem: null
+  materialItem: {
+    name: '',
+    supplier: '',
+    unit: ''
+  }
 }
 const getters = {
   getMaterialItem: (state: Materials) => (materialId: number) => {
@@ -29,13 +33,19 @@ const actions = {
     }
     commit('setMaterialItems', response.data.data)
   },
-  async updateMaterialItem ({commit, dispatch}: {commit: Function, dispatch: Function}, {materialId, payload}: {materialId: string, payload: MaterialItem}) {
+  async updateMaterialItem ({commit}: {commit: Function}, {materialId, payload}: {materialId: string, payload: MaterialItem}) {
     const response = await axios.put(url + '/' + materialId, payload)
     if (response.status !== OK) {
       commit('error/setCode', response.status, {root: true})
       return false
     }
-    dispatch('fetchMaterialItems')
+  },
+  async addNewMaterialItem ({commit}: {commit: Function}, payload: MaterialItem) {
+    const response = await axios.post(url, payload)
+    if (response.status !== OK) {
+      commit('error/setCode', response.status, {root: true})
+      return false
+    }
   }
 }
 

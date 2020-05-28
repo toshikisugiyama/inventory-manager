@@ -6,17 +6,14 @@ import Materials from './pages/Materials.vue'
 import Material from './pages/Material.vue'
 import MaterialEdit from './pages/MaterialEdit.vue'
 import MaterialEditConfirm from './pages/MaterialEditConfirm.vue'
+import MaterialAdd from './pages/MaterialAdd.vue'
+import MaterialAddConfirm from './pages/MaterialAddConfirm.vue'
 import SystemError from './pages/errors/System.vue'
 import store from './store'
 
 Vue.use(VueRouter)
 
 const routes: any = [
-  {
-    path: '/',
-    name: 'materialItems',
-    component: Materials
-  },
   {
     path: '/login',
     component: Login,
@@ -33,9 +30,19 @@ const routes: any = [
     component: SystemError
   },
   {
-    path: '/:materialId',
-    name: 'materialItem',
-    component: Material
+    path: '/add/confirm',
+    name: 'confirmAddMaterialItem',
+    component: MaterialAddConfirm
+  },
+  {
+    path: '/add',
+    name: 'addMaterialItem',
+    component: MaterialAdd
+  },
+  {
+    path: '/edit/confirm/:materialId',
+    name: 'confirmEditMaterialItem',
+    component: MaterialEditConfirm
   },
   {
     path: '/edit/:materialId',
@@ -43,9 +50,14 @@ const routes: any = [
     component: MaterialEdit
   },
   {
-    path: '/edit/confirm/:materialId',
-    name: 'confirmEditMaterialItem',
-    component: MaterialEditConfirm
+    path: '/:materialId',
+    name: 'materialItem',
+    component: Material
+  },
+  {
+    path: '/',
+    name: 'materialItems',
+    component: Materials
   }
 ]
 
