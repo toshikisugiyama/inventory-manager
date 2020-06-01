@@ -32,7 +32,9 @@ export interface Loading {
 
 export interface Materials {
   materialItems: Array<MaterialItem>,
-  materialItem?: MaterialItem | null
+  materialItem: MaterialItem
+  selectedMaterialIds: Array<number>,
+  isSelectedAllMaterials: boolean
 }
 
 export interface MaterialItem {
