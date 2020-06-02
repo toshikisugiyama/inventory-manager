@@ -21,6 +21,7 @@ export default Vue.extend({
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 100;
   &__title {
     color: #fff;
     user-select: none;

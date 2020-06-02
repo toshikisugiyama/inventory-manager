@@ -1,10 +1,18 @@
 <template lang="pug">
 ul.materials__list(v-if="materials.length > 0")
   li.materials__list__item(v-for="material in materials" :key="material.id")
-    div.materials__list__item__content
-      div.materials__list__item__content__info(@click="goToMaterialPage(material.id)")
-        h3.materials__list__item__content__info__title {{ material.name }}
-      div.materials__list__item__content__checkbox
+    .materials__list__item__content
+      ul.materials__list__item__content__info(@click="goToMaterialPage(material.id)")
+        li.materials__list__item__content__info__id
+          span.title 管理番号: &nbsp;
+          | {{ material.id }}
+        li.materials__list__item__content__info__name
+          span.title 品名: &nbsp;
+          | {{ material.name }}
+        li.materials__list__item__content__info__supplier
+          span.title 仕入先: &nbsp;
+          | {{ material.supplier }}
+      .materials__list__item__content__checkbox
         input(:value="material.id" v-model="selectedMaterialIds" @change="changeCheckbox" type="checkbox")
 ul.materials__list(v-else)
   li 原材料が登録されていません。
@@ -56,19 +64,40 @@ export default Vue.extend({
 .materials__list {
   list-style: none;
   padding: 0;
+  height: 60vh;
+  overflow: auto;
   &__item {
+    &__content:hover {
+      background-color: #727272;
+    }
     &__content {
       margin: 5px 0px;
       padding: 10px;
       cursor: pointer;
-      background-color: #727272;
+      background-color: #a1a1a1;
+      translate: background-color 0.8s;
       display: flex;
       justify-content: space-between;
       align-items: center;
       &__info {
         flex-grow: 99;
-        &__title {
-          margin: 0;
+        padding: 0;
+        list-style: none;
+        &__name {
+          font-weight: bold;
+          font-size: 2.5vmin!important;
+        }
+        & > li {
+          display: flex;
+          align-items: center;
+          font-size: 2vmin;
+          & > .title {
+            font-size: 1.8vmin;
+            font-weight: normal;
+          }
+        }
+        & > li:not(:last-child) {
+          margin: 0 0 10px;
         }
       }
       &__checkbox {
