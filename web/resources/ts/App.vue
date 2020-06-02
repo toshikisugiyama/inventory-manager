@@ -49,3 +49,15 @@ export default Vue.extend({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+main {
+  padding: 100px 0 0 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+</style>

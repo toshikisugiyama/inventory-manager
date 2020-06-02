@@ -25,6 +25,12 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  padding: 50px 15px;
+  z-index: 10;
   &__button {
     cursor: pointer;
     user-select: none;
