@@ -36,6 +36,12 @@ export default Vue.extend({
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  z-index: 10;
+  background-color: #fff;
   &__nav {
     display: flex;
     justify-content: space-between;

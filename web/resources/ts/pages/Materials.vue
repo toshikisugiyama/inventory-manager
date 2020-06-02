@@ -2,7 +2,7 @@
 .materials
   section.materials__container
     .materials__container__head
-      h2.materials__container__head__title Materials
+      h2.materials__container__head__title 原材料一覧
       .materials__container__head__buttons
         button(@click="selectAll" :class="{disabled: !materialsIds.length}" :disabled="!materialsIds.length") {{ text.selectbutton }}
         button(@click="deleteMaterials" :class="{disabled: !materialSelected}" :disabled="!materialSelected") 削除
