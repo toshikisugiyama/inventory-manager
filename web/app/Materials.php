@@ -20,4 +20,12 @@ class Materials extends Model
         return $this->belongsTo('App\User');
     }
 
+    /**
+     * Get the inventories for the material.
+     */
+    public function inventories()
+    {
+        return $this->hasMany('App\Inventory');
+    }
+
 }
