@@ -25,3 +25,23 @@ export interface RegisterError {
   email?: Array<string>,
   password?: Array<string>
 }
+
+export interface Loading {
+  loadingState: boolean
+}
+
+export interface Materials {
+  materialItems: Array<MaterialItem>,
+  materialItem: MaterialItem
+  selectedMaterialIds: Array<number>,
+  isSelectedAllMaterials: boolean
+}
+
+export interface MaterialItem {
+  id?: number,
+  name?: string,
+  supplier?: string,
+  unit?: string,
+  created_at?: string,
+  updated_at?: string
+}

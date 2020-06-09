@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 
 import auth from './auth'
 import error from './error'
+import loading from './loading'
+import materials from './materials'
 
 
 Vue.use(Vuex)
@@ -10,7 +12,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
     auth,
-    error
+    error,
+    loading,
+    materials
   }
 })
 
