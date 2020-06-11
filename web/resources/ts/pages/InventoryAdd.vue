@@ -1,5 +1,5 @@
 <template lang="pug">
-  h1 Inventory
+
 </template>
 
 <script lang="ts">
@@ -8,3 +8,7 @@ export default Vue.extend({
 
 })
 </script>
+
+<style lang="scss" scoped>
+
+</style>

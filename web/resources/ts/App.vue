@@ -29,6 +29,7 @@ export default Vue.extend({
   },
   async created () {
     await this.$store.dispatch('materials/fetchMaterialItems')
+    await this.$store.dispatch('inventories/fetchInventoryItems')
     if (this.$route.name === 'materialItem' || this.$route.name === 'editMaterialItem') {
       await this.$store.dispatch('materials/resetMaterialState')
       await this.$store.dispatch('materials/showMaterialItem', this.$route.params.materialId)
@@ -62,6 +63,5 @@ main {
   right: 0;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
 }
 </style>

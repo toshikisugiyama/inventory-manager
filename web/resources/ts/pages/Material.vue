@@ -3,6 +3,7 @@
   section.material__container(v-if="material")
     h1.material__container__name {{material.name}}
     h2.material__container__supplier {{ material.supplier }}
+    InventoryListItem
     div.material__container__buttons
       button.material__container__buttons__back(@click="goBackToMaterialsPage") 戻る
       button.material__container__buttons__edit(@click="editMaterialItem") 編集
@@ -12,7 +13,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import { MaterialItem } from '../store/types'
+import InventoryListItem from '../components/InventoryListItem.vue'
 export default Vue.extend({
+  components: {
+    InventoryListItem
+  },
   computed: {
     material (): MaterialItem {
       return this.$store.state.materials.materialItem
@@ -26,6 +31,7 @@ export default Vue.extend({
       await this.$store.dispatch('loading/commitLoadingState', true)
       await this.$store.dispatch('materials/resetMaterialState')
       await this.$store.dispatch('materials/fetchMaterialItems')
+      await this.$store.dispatch('inventories/fetchInventoryItems')
       this.$router.push({name: 'materialItems'})
       this.$store.dispatch('loading/commitLoadingState', false)
     },

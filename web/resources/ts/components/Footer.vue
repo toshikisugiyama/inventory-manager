@@ -25,11 +25,15 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   bottom: 0;
   right: 0;
   width: 100vw;
-  padding: 50px 15px;
+  height: 5vh;
+  padding: 0 15px;
   z-index: 10;
   background-color: #fff;
   &__button {

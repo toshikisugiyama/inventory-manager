@@ -45,3 +45,17 @@ export interface MaterialItem {
   created_at?: string,
   updated_at?: string
 }
+
+export interface Inventories {
+  inventoryItems: Array<InventoryItem>
+}
+
+export interface InventoryItem {
+  id?: number,
+  lot_code?: string,
+  material_id?: number,
+  amount?: number,
+  dead_line?: string,
+  created_at?: string,
+  updated_at?: string
+}
